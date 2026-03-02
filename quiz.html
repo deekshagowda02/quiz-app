@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz App</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .quiz-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  #question {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .option {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    border: none;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .option:hover {
+    background: #2980b9;
+  }
+
+  #nextBtn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #2ecc71;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+  <h1>Simple Quiz App</h1>
+  <div id="question"></div>
+
+  <button class="option" onclick="checkAnswer('a')"></button>
+  <button class="option" onclick="checkAnswer('b')"></button>
+  <button class="option" onclick="checkAnswer('c')"></button>
+  <button class="option" onclick="checkAnswer('d')"></button>
+
+  <button id="nextBtn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const quizData = [
+  {
+    question: "Who is the father of C language?",
+    options: {
+      a: "James Gosling",
+      b: "Dennis Ritchie",
+      c: "Bjarne Stroustrup",
+      d: "Guido van Rossum"
+    },
+    correct: "b"
+  },
+  {
+    question: "Which symbol ends a C statement?",
+    options: {
+      a: ".",
+      b: ":",
+      c: ";",
+      d: ","
+    },
+    correct: "c"
+  },
+  {
+    question: "Which data type stores decimal numbers?",
+    options: {
+      a: "int",
+      b: "char",
+      c: "float",
+      d: "void"
+    },
+    correct: "c"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const optionButtons = document.getElementsByClassName("option");
+
+function loadQuestion() {
+  const q = quizData[currentQuestion];
+  questionEl.innerText = q.question;
+
+  optionButtons[0].innerText = "A. " + q.options.a;
+  optionButtons[1].innerText = "B. " + q.options.b;
+  optionButtons[2].innerText = "C. " + q.options.c;
+  optionButtons[3].innerText = "D. " + q.options.d;
+}
+
+function checkAnswer(answer) {
+  if (quizData[currentQuestion].correct === answer) {
+    score++;
+  }
+}
+
+function nextQuestion() {
+  currentQuestion++;
+
+  if (currentQuestion < quizData.length) {
+    loadQuestion();
+  } else {
+    document.querySelector(".quiz-container").innerHTML =
+      `<h2>Your Score: ${score} / ${quizData.length}</h2>`;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
